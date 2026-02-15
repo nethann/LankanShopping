@@ -276,11 +276,17 @@
   font-weight: 800;
   color: var(--text);
   margin-bottom: 0.4rem;
+  opacity: 0;
+  animation: fade-up 520ms ease forwards;
+  animation-delay: 520ms;
 }
 
 .hero p {
   font-size: 1rem;
   color: var(--text-muted);
+  opacity: 0;
+  animation: fade-up 520ms ease forwards;
+  animation-delay: 650ms;
 }
 
 .promo-grid {
@@ -302,7 +308,18 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  opacity: 0;
+  transform: translateY(20px) scale(0.985);
+  animation: card-in 620ms cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
 }
+
+.promo-card:nth-child(1) { animation-delay: 60ms; }
+.promo-card:nth-child(2) { animation-delay: 140ms; }
+.promo-card:nth-child(3) { animation-delay: 220ms; }
+.promo-card:nth-child(4) { animation-delay: 300ms; }
+.promo-card:nth-child(5) { animation-delay: 380ms; }
+.promo-card:nth-child(6) { animation-delay: 460ms; }
+.promo-card:nth-child(7) { animation-delay: 540ms; }
 
 .promo-card h2 {
   margin: 0;
@@ -436,6 +453,14 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   min-height: 170px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fade-up 500ms ease forwards;
+  animation-delay: 760ms;
+}
+
+.category-card:nth-child(2) {
+  animation-delay: 860ms;
 }
 
 .category-card:nth-child(1) {
@@ -468,6 +493,28 @@
 .category-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 28px rgba(15, 23, 42, 0.2);
+}
+
+@keyframes card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .category-emoji {
@@ -1497,5 +1544,16 @@
 
   .site-footer-inner {
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-card,
+  .hero h1,
+  .hero p,
+  .category-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
