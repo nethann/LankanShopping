@@ -1197,18 +1197,67 @@
   }
 
   .promo-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 0.65rem;
   }
 
-  .promo-card,
-  .promo-card-small,
-  .promo-card-wide {
-    grid-column: span 1;
-    min-height: 210px;
+  .promo-card {
+    min-height: 190px;
+    padding: 1rem;
+  }
+
+  .promo-card p {
+    max-width: 100%;
+    font-size: 0.82rem;
   }
 
   .promo-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.04rem;
+    max-width: 100%;
+  }
+
+  .promo-card-wide {
+    order: 1;
+    grid-column: 1 / -1;
+    min-height: 280px;
+  }
+
+  .promo-card-forest {
+    order: 2;
+    min-height: 130px;
+  }
+
+  .promo-card-orange {
+    order: 3;
+    min-height: 300px;
+    grid-row: span 2;
+  }
+
+  .promo-card-purple {
+    order: 4;
+    min-height: 190px;
+  }
+
+  .promo-card-mint {
+    order: 5;
+    min-height: 175px;
+  }
+
+  .promo-card-green {
+    order: 6;
+    min-height: 175px;
+  }
+
+  .promo-card-sky {
+    order: 7;
+    grid-column: 1 / -1;
+    min-height: 170px;
+  }
+
+  .promo-cta {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.7rem;
   }
 
   .category-grid {
