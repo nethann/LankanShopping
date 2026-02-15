@@ -27,7 +27,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   async function signInWithGoogle() {
-    await signInWithPopup(auth, googleProvider);
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err: unknown) {
+      const error = err as { code?: string; message?: string };
+      // Don't alert if user just closed the popup
+      if (error.code !== "auth/popup-closed-by-user" && error.code !== "auth/cancelled-popup-request") {
+        console.error("Sign-in error:", error);
+        alert("Sign-in failed: " + (error.message || "Unknown error"));
+      }
+    }
   }
 
   async function logout() {
