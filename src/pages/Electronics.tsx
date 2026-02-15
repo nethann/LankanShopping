@@ -22,16 +22,18 @@ export default function Electronics() {
   const filteredProducts = products.filter((product) => {
     const needle = query.trim().toLowerCase();
     if (!needle) return true;
+    const name = String(product.name ?? "").toLowerCase();
+    const weight = String(product.weight ?? "").toLowerCase();
     return (
-      product.name.toLowerCase().includes(needle) ||
-      product.weight.toLowerCase().includes(needle)
+      name.includes(needle) ||
+      weight.includes(needle)
     );
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === "price-asc") return a.price - b.price;
     if (sortBy === "price-desc") return b.price - a.price;
-    if (sortBy === "name") return a.name.localeCompare(b.name);
+    if (sortBy === "name") return String(a.name ?? "").localeCompare(String(b.name ?? ""));
     return 0;
   });
 
