@@ -398,6 +398,12 @@
   height: 180px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.promo-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
