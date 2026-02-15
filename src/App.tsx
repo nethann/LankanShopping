@@ -8,6 +8,7 @@ import Groceries from "./pages/Groceries";
 import Electronics from "./pages/Electronics";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
+import Settings from "./pages/Settings";
 import "./App.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/electronics" element={<Electronics />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>
           </BrowserRouter>

@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
-import { useCurrency } from "../contexts/CurrencyContext";
 import { ADMIN_EMAILS } from "../lib/firebase";
 import { useState, useRef, useEffect } from "react";
 
 export default function Navbar() {
   const { user, signInWithGoogle, logout } = useAuth();
   const { totalCount } = useCart();
-  const { currency, country, loading, source, supportedCurrencies, setCurrencyOverride } = useCurrency();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -31,24 +29,12 @@ export default function Navbar() {
       </Link>
 
       <div className="navbar-actions">
-        <label className="currency-picker">
-          <span className="currency-picker-label">
-            {country ? `${country}` : "Region"} {source === "auto" ? "Auto" : source === "override" ? "Manual" : "Fallback"}
-          </span>
-          <select
-            className="currency-select"
-            value={currency}
-            disabled={loading}
-            onChange={(e) => setCurrencyOverride(e.target.value as typeof currency)}
-            aria-label="Select currency"
-          >
-            {supportedCurrencies.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-        </label>
+        <Link to="/settings" className="nav-icon" aria-label="Settings">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </Link>
 
         {/* Admin link */}
         {isAdmin && (
