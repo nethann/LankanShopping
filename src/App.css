@@ -331,7 +331,11 @@
 }
 
 .promo-card-mint {
-  background: linear-gradient(145deg, #7bc8b2 0%, #60ad98 100%);
+  background-image:
+    linear-gradient(145deg, rgba(16, 45, 39, 0.38) 0%, rgba(16, 45, 39, 0.22) 100%),
+    url("/graphics/household_items.png");
+  background-position: center, center;
+  background-size: cover, cover;
 }
 
 .promo-card-green {
