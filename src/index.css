@@ -7,11 +7,23 @@
 }
 
 :root {
+  --primary: #44A194;
+  --secondary: #7EACB5;
+  --accent: #BF4646;
+  --primary-light: #e6f4f2;
+  --secondary-light: #eaf3f5;
+  --accent-light: #fdeaea;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --bg: #f5f7f8;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  color: #1a1a2e;
-  background-color: #f8f9fa;
+  color: var(--text);
+  background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

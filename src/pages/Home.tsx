@@ -5,17 +5,13 @@ const categories = [
     name: "Groceries",
     path: "/groceries",
     emoji: "🛒",
-    description: "Fresh produce, spices, rice, tea, and everyday essentials.",
-    color: "#e8f5e9",
-    accent: "#2e7d32",
+    description: "Fresh produce, spices, rice & essentials",
   },
   {
     name: "Electronics",
     path: "/electronics",
     emoji: "💻",
-    description: "Gadgets, accessories, audio gear, and smart devices.",
-    color: "#e3f2fd",
-    accent: "#1565c0",
+    description: "Gadgets, accessories & smart devices",
   },
 ];
 
@@ -29,16 +25,13 @@ export default function Home() {
       <h2 className="section-title">Shop by Category</h2>
       <div className="category-grid">
         {categories.map((cat) => (
-          <Link
-            to={cat.path}
-            key={cat.name}
-            className="category-card"
-            style={{ "--card-bg": cat.color, "--card-accent": cat.accent } as React.CSSProperties}
-          >
+          <Link to={cat.path} key={cat.name} className="category-card">
             <span className="category-emoji">{cat.emoji}</span>
-            <h3 className="category-name">{cat.name}</h3>
-            <p className="category-desc">{cat.description}</p>
-            <span className="category-cta">Browse {cat.name} &rarr;</span>
+            <div className="category-text">
+              <h3 className="category-name">{cat.name}</h3>
+              <p className="category-desc">{cat.description}</p>
+            </div>
+            <span className="category-arrow">&rarr;</span>
           </Link>
         ))}
       </div>
