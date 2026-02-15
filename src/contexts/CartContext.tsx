@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   setDoc,
   deleteDoc,
@@ -43,9 +44,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     setLoading(true);
     const cartRef = collection(db, "users", user.uid, "cart");
-    getDocs(cartRef).then((snap) => {
+    getDocs(cartRef).then(async (snap) => {
       const loaded: CartItem[] = snap.docs.map((d) => d.data() as CartItem);
-      setItems(loaded);
+
+      // Verify each cart item still exists in its product collection
+      const verified: CartItem[] = [];
+      for (const item of loaded) {
+        // Check both collections
+        const inGroceries = await getDoc(doc(db, "groceries", item.product.id));
+        const inElectronics = await getDoc(doc(db, "electronics", item.product.id));
+        if (inGroceries.exists() || inElectronics.exists()) {
+          verified.push(item);
+        } else {
+          // Product was deleted — remove from user's cart in Firestore
+          deleteDoc(doc(db, "users", user.uid, "cart", item.product.id));
+        }
+      }
+
+      setItems(verified);
       setLoading(false);
     });
   }, [user]);
