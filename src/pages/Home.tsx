@@ -36,8 +36,8 @@ export default function Home() {
         </article>
 
         <article className="promo-card promo-card-amber promo-card-wide">
-          <h2>Freshness guaranteed</h2>
-          <p>Handpicked Sri Lankan produce packed for export quality.</p>
+          <h2>Exploring Sinhala & Tamil New Year Delicacies</h2>
+          <p>Shop now!</p>
           <Link to="/groceries" className="promo-cta">
             Shop Now
           </Link>
