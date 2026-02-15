@@ -16,3 +16,8 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Add admin emails here
+export const ADMIN_EMAILS = [
+  "nethan.nagendran@gmail.com",
+];

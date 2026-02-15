@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import SeedButton from "../components/SeedButton";
 
 const categories = [
   {
@@ -35,9 +34,6 @@ export default function Home() {
             <span className="category-arrow">&rarr;</span>
           </Link>
         ))}
-      </div>
-      <div className="seed-section">
-        <SeedButton />
       </div>
     </div>
   );

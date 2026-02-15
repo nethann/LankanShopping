@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Groceries from "./pages/Groceries";
 import Electronics from "./pages/Electronics";
 import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
               <Route path="/groceries" element={<Groceries />} />
               <Route path="/electronics" element={<Electronics />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </main>
         </BrowserRouter>

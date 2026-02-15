@@ -25,7 +25,11 @@ export default function Cart() {
       <div className="cart-list">
         {items.map((item) => (
           <div key={item.product.id} className="cart-item">
-            <span className="cart-item-emoji">{item.product.emoji}</span>
+            {item.product.images?.[0] ? (
+              <img src={item.product.images[0]} alt="" className="cart-item-img" />
+            ) : (
+              <span className="cart-item-emoji">🛒</span>
+            )}
             <div className="cart-item-info">
               <p className="cart-item-name">{item.product.name}</p>
               <p className="cart-item-qty">Qty: {item.qty}</p>
