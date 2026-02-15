@@ -3,6 +3,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Groceries from "./pages/Groceries";
 import Electronics from "./pages/Electronics";
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>
+            <Footer />
           </BrowserRouter>
         </CartProvider>
       </CurrencyProvider>
