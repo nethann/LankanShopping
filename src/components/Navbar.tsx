@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
+import { useCurrency } from "../contexts/CurrencyContext";
 import { ADMIN_EMAILS } from "../lib/firebase";
 import { useState, useRef, useEffect } from "react";
 
 export default function Navbar() {
   const { user, signInWithGoogle, logout } = useAuth();
   const { totalCount } = useCart();
+  const { currency, country, loading, source, supportedCurrencies, setCurrencyOverride } = useCurrency();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +31,25 @@ export default function Navbar() {
       </Link>
 
       <div className="navbar-actions">
+        <label className="currency-picker">
+          <span className="currency-picker-label">
+            {country ? `${country}` : "Region"} {source === "auto" ? "Auto" : source === "override" ? "Manual" : "Fallback"}
+          </span>
+          <select
+            className="currency-select"
+            value={currency}
+            disabled={loading}
+            onChange={(e) => setCurrencyOverride(e.target.value as typeof currency)}
+            aria-label="Select currency"
+          >
+            {supportedCurrencies.map((code) => (
+              <option key={code} value={code}>
+                {code}
+              </option>
+            ))}
+          </select>
+        </label>
+
         {/* Admin link */}
         {isAdmin && (
           <Link to="/admin" className="nav-admin-link">

@@ -1,8 +1,10 @@
 import { useCart } from "../contexts/CartContext";
 import { Link } from "react-router-dom";
+import { useCurrency } from "../contexts/CurrencyContext";
 
 export default function Cart() {
   const { items, totalCount, removeFromCart } = useCart();
+  const { formatPriceFromLkr } = useCurrency();
 
   const total = items.reduce((sum, i) => sum + i.product.price * i.qty, 0);
 
@@ -35,7 +37,7 @@ export default function Cart() {
               <p className="cart-item-qty">Qty: {item.qty}</p>
             </div>
             <span className="cart-item-price">
-              Rs. {(item.product.price * item.qty).toLocaleString()}
+              {formatPriceFromLkr(item.product.price * item.qty)}
             </span>
             <button
               className="cart-item-delete"
@@ -50,7 +52,7 @@ export default function Cart() {
 
       <div className="cart-total">
         <span>Total</span>
-        <span>Rs. {total.toLocaleString()}</span>
+        <span>{formatPriceFromLkr(total)}</span>
       </div>
     </div>
   );

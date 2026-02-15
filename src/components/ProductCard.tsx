@@ -2,11 +2,13 @@ import { useState } from "react";
 import type { Product } from "../data/products";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
+import { useCurrency } from "../contexts/CurrencyContext";
 import LoginPrompt from "./LoginPrompt";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { user } = useAuth();
   const { addToCart } = useCart();
+  const { formatPriceFromLkr } = useCurrency();
   const [showPrompt, setShowPrompt] = useState(false);
   const [added, setAdded] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
@@ -48,7 +50,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <h3 className="product-name">{product.name}</h3>
         <p className="product-weight">{product.weight}</p>
         <div className="product-footer">
-          <span className="product-price">Rs. {product.price.toLocaleString()}</span>
+          <span className="product-price">{formatPriceFromLkr(product.price)}</span>
           <button
             className={`add-to-cart-btn${added ? " added" : ""}`}
             onClick={handleAdd}
