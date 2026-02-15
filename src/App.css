@@ -387,6 +387,121 @@
   padding-top: 1rem;
 }
 
+.catalog-hero {
+  position: relative;
+  border-radius: 18px;
+  padding: 1.4rem 1.35rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.catalog-hero::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -50px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.catalog-hero-groceries {
+  background: linear-gradient(145deg, #2f8f67 0%, #256f4f 100%);
+}
+
+.catalog-hero-electronics {
+  background: linear-gradient(145deg, #4f84b0 0%, #3f6d93 100%);
+}
+
+.catalog-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0.6rem;
+  padding: 0.24rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.catalog-hero .page-title,
+.catalog-hero .page-subtitle {
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+.catalog-hero .page-subtitle {
+  margin-bottom: 0;
+  max-width: 620px;
+  opacity: 0.95;
+}
+
+.catalog-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto auto auto;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.catalog-search,
+.catalog-sort {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.62rem 0.72rem;
+  font-size: 0.88rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.catalog-search:focus,
+.catalog-sort:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.catalog-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 0.65rem;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.catalog-empty {
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 1.4rem;
+  text-align: center;
+  background: var(--surface);
+}
+
+.catalog-empty h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.catalog-empty p {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
 .page-title {
   font-size: 1.75rem;
   font-weight: 800;
@@ -1099,6 +1214,14 @@
   .category-grid {
     grid-template-columns: 1fr;
     max-width: 100%;
+  }
+
+  .catalog-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-chip {
+    justify-content: flex-start;
   }
 
   .hero h1 {
