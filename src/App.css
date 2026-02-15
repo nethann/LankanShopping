@@ -344,10 +344,11 @@
 
 .promo-card-sky {
   background-image:
-    linear-gradient(145deg, rgba(156, 191, 208, 0.92) 0%, rgba(132, 170, 187, 0.92) 100%),
-    url("/graphics/tech-bg.svg");
-  background-position: center;
-  background-size: cover;
+    linear-gradient(145deg, rgba(12, 24, 34, 0.42) 0%, rgba(12, 24, 34, 0.18) 100%),
+    url("/graphics/explore_lankan_meals.png");
+  background-position: center, center 45%;
+  background-repeat: no-repeat;
+  background-size: cover, cover;
 }
 
 .promo-card::before {
