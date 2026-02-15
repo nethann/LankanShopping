@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   collection,
   getDocs,
@@ -13,6 +13,12 @@ import type { Product } from "../data/products";
 import { Navigate } from "react-router-dom";
 
 type Category = "groceries" | "electronics";
+
+type PendingImage = {
+  id: string;
+  file: File;
+  previewUrl: string;
+};
 
 const EMPTY_FORM = { name: "", price: "", weight: "" };
 
@@ -47,18 +53,43 @@ async function compressImage(file: File, maxWidth = 800, quality = 0.7): Promise
   });
 }
 
+function makePendingImage(file: File): PendingImage {
+  return {
+    id: `${file.name}-${file.size}-${file.lastModified}-${Math.random().toString(36).slice(2)}`,
+    file,
+    previewUrl: URL.createObjectURL(file),
+  };
+}
+
+function revokePendingImages(images: PendingImage[]) {
+  for (const image of images) {
+    URL.revokeObjectURL(image.previewUrl);
+  }
+}
+
 export default function Admin() {
   const { user } = useAuth();
   const [category, setCategory] = useState<Category>("groceries");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(EMPTY_FORM);
-  const [files, setFiles] = useState<File[]>([]);
+  const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editImages, setEditImages] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
 
   const isAdmin = user?.email ? ADMIN_EMAILS.includes(user.email) : false;
+  const pendingRef = useRef<PendingImage[]>([]);
+
+  useEffect(() => {
+    pendingRef.current = pendingImages;
+  }, [pendingImages]);
+
+  useEffect(() => {
+    return () => {
+      revokePendingImages(pendingRef.current);
+    };
+  }, []);
 
   // Redirect non-admins
   if (!user || !isAdmin) return <Navigate to="/" />;
@@ -74,9 +105,16 @@ export default function Admin() {
     });
   }, [category]);
 
+  function clearPendingImages() {
+    setPendingImages((prev) => {
+      revokePendingImages(prev);
+      return [];
+    });
+  }
+
   function resetForm() {
     setForm(EMPTY_FORM);
-    setFiles([]);
+    clearPendingImages();
     setEditingId(null);
     setEditImages([]);
   }
@@ -84,8 +122,32 @@ export default function Admin() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files;
     if (!selected) return;
-    const arr = Array.from(selected).slice(0, 2);
-    setFiles(arr);
+
+    const selectedFiles = Array.from(selected);
+    setPendingImages((prev) => {
+      const remainingSlots = Math.max(0, 2 - prev.length);
+      if (remainingSlots === 0) return prev;
+
+      const next = selectedFiles.slice(0, remainingSlots).map(makePendingImage);
+      return [...prev, ...next];
+    });
+
+    // Allow selecting the same file again in a second click if removed/re-added.
+    e.target.value = "";
+  }
+
+  function removePendingImage(id: string) {
+    setPendingImages((prev) => {
+      const target = prev.find((img) => img.id === id);
+      if (target) {
+        URL.revokeObjectURL(target.previewUrl);
+      }
+      return prev.filter((img) => img.id !== id);
+    });
+  }
+
+  function removeExistingImage(index: number) {
+    setEditImages((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function convertFiles(productFiles: File[]): Promise<string[]> {
@@ -107,8 +169,8 @@ export default function Admin() {
       if (editingId) {
         // Editing existing product
         let images = editImages;
-        if (files.length > 0) {
-          images = await convertFiles(files);
+        if (pendingImages.length > 0) {
+          images = await convertFiles(pendingImages.map((img) => img.file));
         }
 
         const data = {
@@ -123,11 +185,11 @@ export default function Admin() {
         );
       } else {
         // Adding new product
-        if (files.length === 0) {
+        if (pendingImages.length === 0) {
           setSaving(false);
           return;
         }
-        const images = await convertFiles(files);
+        const images = await convertFiles(pendingImages.map((img) => img.file));
         const data = {
           name: form.name,
           price: Number(form.price),
@@ -148,6 +210,7 @@ export default function Admin() {
   }
 
   function startEdit(product: Product) {
+    clearPendingImages();
     setEditingId(product.id);
     setForm({
       name: product.name || "",
@@ -155,7 +218,6 @@ export default function Admin() {
       weight: product.weight || "",
     });
     setEditImages(product.images || []);
-    setFiles([]);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -236,14 +298,51 @@ export default function Admin() {
           <label className="admin-label">
             Pictures (max 2) {editingId ? "" : "*"}
           </label>
-          {editingId && editImages.length > 0 && files.length === 0 && (
-            <div className="admin-current-images">
-              {editImages.map((url, i) => (
-                <img key={i} src={url} alt="" className="admin-thumb" />
-              ))}
-              <p className="admin-hint">Upload new files to replace</p>
-            </div>
+
+          {editingId && editImages.length > 0 && pendingImages.length === 0 && (
+            <>
+              <div className="admin-current-images">
+                {editImages.map((url, i) => (
+                  <div key={url + i} className="admin-thumb-wrap">
+                    <img src={url} alt="" className="admin-thumb" />
+                    <button
+                      type="button"
+                      className="admin-thumb-remove"
+                      onClick={() => removeExistingImage(i)}
+                      aria-label="Remove existing image"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <p className="admin-hint">Select new files to replace with up to 2 images.</p>
+            </>
           )}
+
+          {pendingImages.length > 0 && (
+            <>
+              <div className="admin-current-images">
+                {pendingImages.map((item) => (
+                  <div key={item.id} className="admin-thumb-wrap">
+                    <img src={item.previewUrl} alt="" className="admin-thumb" />
+                    <button
+                      type="button"
+                      className="admin-thumb-remove"
+                      onClick={() => removePendingImage(item.id)}
+                      aria-label="Remove selected image"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <p className="admin-hint">
+                {pendingImages.length}/2 selected. You can click Choose files again to add another image.
+              </p>
+            </>
+          )}
+
           <div className="admin-file-wrapper">
             <label className="admin-file-label">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -257,12 +356,13 @@ export default function Admin() {
                 accept="image/*"
                 multiple
                 onChange={handleFileChange}
-                required={!editingId && files.length === 0}
+                required={!editingId && pendingImages.length === 0}
+                disabled={pendingImages.length >= 2}
               />
             </label>
             <span className="admin-file-names">
-              {files.length > 0
-                ? files.map((f) => f.name).join(", ")
+              {pendingImages.length > 0
+                ? pendingImages.map((f) => f.file.name).join(", ")
                 : "No files chosen"}
             </span>
           </div>
