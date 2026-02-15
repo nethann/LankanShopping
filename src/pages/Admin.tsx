@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+ï»¿import { useEffect, useRef, useState } from "react";
 import {
   collection,
   getDocs,
@@ -311,7 +311,7 @@ export default function Admin() {
                       onClick={() => removeExistingImage(i)}
                       aria-label="Remove existing image"
                     >
-                      ×
+                      Ã—
                     </button>
                   </div>
                 ))}
@@ -332,7 +332,7 @@ export default function Admin() {
                       onClick={() => removePendingImage(item.id)}
                       aria-label="Remove selected image"
                     >
-                      ×
+                      Ã—
                     </button>
                   </div>
                 ))}
@@ -407,7 +407,7 @@ export default function Admin() {
               <div className="admin-product-info">
                 <p className="admin-product-name">{p.name}</p>
                 <p className="admin-product-meta">
-                  Rs. {p.price.toLocaleString()} &middot; {p.weight}
+                  Rs. {p.price.toLocaleString()} &middot; Weight: {p.weight}
                 </p>
               </div>
               <div className="admin-product-actions">
@@ -425,3 +425,4 @@ export default function Admin() {
     </div>
   );
 }
+

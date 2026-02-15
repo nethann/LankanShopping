@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="product-image-placeholder">No image</div>
         )}
         <h3 className="product-name">{product.name}</h3>
-        <p className="product-weight">{product.weight}</p>
+        <p className="product-weight">Weight: {product.weight}</p>
         <div className="product-footer">
           <span className="product-price">{formatPriceFromLkr(product.price)}</span>
           <button
