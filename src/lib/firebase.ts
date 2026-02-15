@@ -20,5 +20,6 @@ export const googleProvider = new GoogleAuthProvider();
 // Add admin emails here
 export const ADMIN_EMAILS = [
   "nethan.nagendran@gmail.com",
-  "rrg.nagendran@gmail.com"
+  "rrg.nagendran@gmail.com",
+  "nagendranrachel@gmail.com"
 ];
