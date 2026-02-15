@@ -39,7 +39,3 @@ A React + TypeScript app for showcasing Sri Lankan products to international use
 3. Build
    - `npm run build`
 
-## Project Notes
-
-- Firebase config is currently set in `src/lib/firebase.ts`.
-- Admin access is controlled by email list in `src/lib/firebase.ts` (`ADMIN_EMAILS`).
