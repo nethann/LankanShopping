@@ -2,7 +2,7 @@ import { useCart } from "../contexts/CartContext";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const { items, totalCount } = useCart();
+  const { items, totalCount, removeFromCart } = useCart();
 
   const total = items.reduce((sum, i) => sum + i.product.price * i.qty, 0);
 
@@ -33,6 +33,13 @@ export default function Cart() {
             <span className="cart-item-price">
               Rs. {(item.product.price * item.qty).toLocaleString()}
             </span>
+            <button
+              className="cart-item-delete"
+              onClick={() => removeFromCart(item.product.id)}
+              aria-label="Remove item"
+            >
+              &times;
+            </button>
           </div>
         ))}
       </div>
