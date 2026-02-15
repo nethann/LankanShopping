@@ -320,10 +320,10 @@
 
 .promo-card-amber {
   background-image:
-    linear-gradient(145deg, rgba(234, 160, 58, 0.9) 0%, rgba(217, 135, 31, 0.9) 100%),
-    url("/graphics/freshness-bg.svg");
-  background-position: center, 78% 52%;
-  background-size: cover, 86%;
+    linear-gradient(145deg, rgba(40, 30, 16, 0.42) 0%, rgba(40, 30, 16, 0.24) 100%),
+    url("/graphics/sinhala.jpg");
+  background-position: center, center;
+  background-size: cover, cover;
 }
 
 .promo-card-forest {
