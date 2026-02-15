@@ -8,14 +8,20 @@ export default function Navbar() {
   const { user, signInWithGoogle, logout } = useAuth();
   const { totalCount } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const categoryRef = useRef<HTMLDivElement>(null);
 
   const isAdmin = user?.email ? ADMIN_EMAILS.includes(user.email) : false;
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (menuRef.current && !menuRef.current.contains(target)) {
         setMenuOpen(false);
+      }
+      if (categoryRef.current && !categoryRef.current.contains(target)) {
+        setCategoryOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClick);
@@ -30,6 +36,27 @@ export default function Navbar() {
         </Link>
 
         <div className="navbar-actions">
+          <div className="nav-dropdown" ref={categoryRef}>
+            <button
+              className="nav-icon nav-icon-btn"
+              aria-label="Categories"
+              onClick={() => setCategoryOpen((o) => !o)}
+            >
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+            </button>
+            {categoryOpen && (
+              <div className="nav-dropdown-menu">
+                <Link to="/groceries" onClick={() => setCategoryOpen(false)}>Groceries</Link>
+                <Link to="/electronics" onClick={() => setCategoryOpen(false)}>Electronics</Link>
+              </div>
+            )}
+          </div>
+
           <Link to="/settings" className="nav-icon" aria-label="Settings">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="3" />

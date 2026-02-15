@@ -22,7 +22,7 @@ export default function Home() {
         <article className="promo-card promo-card-orange promo-card-small">
           <h2>Save more every day</h2>
           <p>Keells deals and member savings on essentials.</p>
-          <Link to="/groceries" className="promo-cta">
+          <Link to="/promo/save-more-every-day" className="promo-cta">
             Shop Now
           </Link>
         </article>
@@ -30,7 +30,7 @@ export default function Home() {
         <article className="promo-card promo-card-purple promo-card-small">
           <h2>Ramadan Specials</h2>
           <p>Up to 25% off on selected imported products.</p>
-          <Link to="/groceries" className="promo-cta">
+          <Link to="/promo/ramadan-specials" className="promo-cta">
             Shop Now
           </Link>
         </article>
@@ -38,7 +38,7 @@ export default function Home() {
         <article className="promo-card promo-card-amber promo-card-wide">
           <h2>Exploring Sinhala & Tamil New Year Delicacies</h2>
           <p>Shop now!</p>
-          <Link to="/groceries" className="promo-cta">
+          <Link to="/promo/sinhala-tamil-new-year-delicacies" className="promo-cta">
             Shop Now
           </Link>
         </article>
@@ -46,7 +46,7 @@ export default function Home() {
         <article className="promo-card promo-card-forest">
           <h2>Register with rewards</h2>
           <p>Sign in and unlock member pricing and quick checkout.</p>
-          <Link to="/" className="promo-cta">
+          <Link to="/promo/register-with-rewards" className="promo-cta">
             Register
           </Link>
         </article>
@@ -54,7 +54,7 @@ export default function Home() {
         <article className="promo-card promo-card-mint">
           <h2>All your household needs</h2>
           <p>Groceries and daily-use items in one place.</p>
-          <Link to="/groceries" className="promo-cta">
+          <Link to="/promo/all-your-household-needs" className="promo-cta">
             Shop Now
           </Link>
         </article>
@@ -62,7 +62,7 @@ export default function Home() {
         <article className="promo-card promo-card-green">
           <h2>Weekly export picks</h2>
           <p>Top-selling pantry bundles selected for overseas buyers.</p>
-          <Link to="/groceries" className="promo-cta">
+          <Link to="/promo/weekly-export-picks" className="promo-cta">
             Shop Now
           </Link>
         </article>
@@ -70,7 +70,7 @@ export default function Home() {
         <article className="promo-card promo-card-sky">
           <h2>Explore Lankan brands</h2>
           <p>Find trusted local products from across Sri Lanka.</p>
-          <Link to="/electronics" className="promo-cta">
+          <Link to="/promo/explore-lankan-brands" className="promo-cta">
             Explore
           </Link>
         </article>

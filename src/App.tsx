@@ -10,6 +10,7 @@ import Electronics from "./pages/Electronics";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import Settings from "./pages/Settings";
+import PromoPage from "./pages/PromoPage";
 import "./App.css";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/promo/:slug" element={<PromoPage />} />
               </Routes>
             </main>
             <Footer />
